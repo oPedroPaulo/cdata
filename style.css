@@ -483,3 +483,49 @@ footer strong { color: var(--brand-primary); font-weight: 700; }
     .tags-legend-mobile { display: flex; }
     .chart-container { height: 220px; }
 }
+
+/* ========================================================
+   TELA DE LOGIN / PRIVACIDADE
+   ======================================================== */
+.tela-login-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 41, 59, 0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    transition: opacity 0.3s ease;
+}
+
+.tela-login-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+    display: none !important;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: var(--shadow-lg);
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+}
+
+.login-card h2 {
+    justify-content: center;
+    border-bottom: none;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0;
+}
+
+.login-card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}

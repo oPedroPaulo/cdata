@@ -14,6 +14,33 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// ==========================================
+// CONFIGURAÇÃO DA SENHA DE ACESSO
+// ==========================================
+const SENHA_SECRETA = "0812"; // <--- Altere para a senha que desejar
+
+// Verificar se já realizou login nesta aba
+if (sessionStorage.getItem('autenticado') === 'true') {
+    const telaLogin = document.getElementById('tela-login');
+    if (telaLogin) telaLogin.classList.add('hidden');
+}
+
+const formLogin = document.getElementById('form-login');
+if (formLogin) {
+    formLogin.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const senhaDigitada = document.getElementById('senha-acesso').value;
+        if (senhaDigitada === SENHA_SECRETA) {
+            sessionStorage.setItem('autenticado', 'true');
+            const telaLogin = document.getElementById('tela-login');
+            if (telaLogin) telaLogin.classList.add('hidden');
+        } else {
+            alert('Senha incorreta! Acesso negado.');
+            document.getElementById('senha-acesso').value = '';
+        }
+    });
+}
+
 let bancos = [];
 let compras = [];
 let faturasInfo = {};
