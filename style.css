@@ -1,0 +1,485 @@
+/* ========================================================
+   VARIÁVEIS DE COR E ESTILO (DESIGN SYSTEM CONTROL DATA)
+   ======================================================== */
+:root {
+    --brand-dark: #1e0059;     
+    --brand-primary: #4c0099;  
+    --brand-light: #7b00ff;    
+    
+    --bg-body: #f4f6f9;        
+    --surface: #ffffff;        
+    
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --text-light: #94a3b8;
+    
+    --border-color: #e2e8f0;
+    
+    --danger: #ef4444;
+    --danger-light: #fef2f2;
+    --success: #10b981;
+    --success-light: #ecfdf5;
+    --warning: #f59e0b;
+    --warning-light: #fffbeb;
+    --info: #3b82f6;
+    --info-light: #eff6ff;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    --shadow-lg: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01);
+    
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================================
+   RESETS E BASE
+   ======================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ========================================================
+   CABEÇALHO (HEADER)
+   ======================================================== */
+header {
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1.2rem;
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#logo-site {
+    height: 55px;
+    width: auto;
+    object-fit: contain;
+}
+
+.header-titles h1 {
+    font-size: 1.7rem;
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-light));
+    -webkit-background-clip: text;
+    background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    color: transparent; 
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.header-titles p { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+
+main {
+    flex: 1; 
+    max-width: 1200px;
+    width: 100%;
+    margin: 2.5rem auto;
+    padding: 0 1.5rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 2.2fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.dashboard-section {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* ========================================================
+   CARTÕES GERAIS E TIPOGRAFIA
+   ======================================================== */
+.card {
+    background: var(--surface);
+    padding: 1.8rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255,255,255,0.8);
+    transition: var(--transition);
+}
+
+.card:hover { box-shadow: var(--shadow-lg); }
+
+.card h2, .section-title {
+    font-size: 1.15rem;
+    color: var(--brand-dark);
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid var(--bg-body);
+    padding-bottom: 0.8rem;
+}
+
+.icon { font-size: 1.2rem; }
+
+/* ========================================================
+   FORMULÁRIOS E INPUTS
+   ======================================================== */
+form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+.dias-inputs { display: flex; gap: 1rem; }
+.dias-inputs div { flex: 1; display: flex; flex-direction: column; gap: 0.3rem;}
+.dias-inputs label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+
+input, select {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    width: 100%;
+    background-color: var(--bg-body);
+    color: var(--text-main);
+    transition: var(--transition);
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: var(--brand-light);
+    box-shadow: 0 0 0 3px rgba(123, 0, 255, 0.15);
+    background-color: var(--surface);
+}
+
+.hidden { display: none !important; }
+
+/* Estilos para Tags */
+.tag-group { display: flex; gap: 0.5rem; align-items: stretch; }
+.tag-group select { flex: 1; }
+.tag-badge {
+    display: inline-block; padding: 0.2rem 0.6rem; border-radius: 12px;
+    font-size: 0.75rem; font-weight: 700; color: white; margin-left: 0.5rem;
+    vertical-align: middle; text-shadow: 0 1px 2px rgba(0,0,0,0.4); 
+    box-shadow: var(--shadow-sm);
+}
+
+.color-picker-group { display: flex; align-items: center; gap: 1rem; }
+input[type="color"] {
+    padding: 0; border: none; border-radius: 8px; width: 50px; height: 50px; cursor: pointer;
+}
+.dica-cor { font-size: 0.85rem; color: var(--text-muted); }
+
+/* ========================================================
+   BOTÕES
+   ======================================================== */
+button {
+    padding: 0.85rem 1.2rem; border: none; border-radius: var(--radius-md);
+    font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: var(--transition);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--brand-primary), var(--brand-light));
+    color: white; box-shadow: 0 4px 15px rgba(76, 0, 153, 0.3);
+}
+.btn-primary:hover {
+    transform: translateY(-2px); box-shadow: 0 6px 20px rgba(76, 0, 153, 0.4);
+}
+
+.btn-secondary { background-color: var(--surface); color: var(--brand-primary); border: 1px solid var(--brand-primary); white-space: nowrap; }
+.btn-secondary:hover { background-color: var(--brand-primary); color: white; }
+
+.btn-exportar { background-color: var(--surface); color: var(--text-main); border: 1px solid var(--border-color); width: 100%; }
+.btn-exportar:hover { background-color: var(--bg-body); border-color: var(--text-muted); }
+
+.import-area { margin-top: 0.5rem; padding-top: 1rem; border-top: 1px dashed var(--border-color); }
+.import-area label { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.5rem; display: block;}
+.import-input-group { display: flex; gap: 0.5rem; }
+.import-input-group input { padding: 0.5rem; font-size: 0.85rem; }
+.btn-importar { background-color: var(--text-main); color: white; padding: 0.5rem 1rem; }
+.btn-importar:hover { background-color: #000; }
+
+/* ========================================================
+   PANORAMA GLOBAL E GRÁFICO
+   ======================================================== */
+.resumo-geral { padding: 1.5rem; }
+.resumo-cards { display: flex; gap: 1.2rem; margin-top: 0.5rem; }
+
+.resumo-box { 
+    flex: 1; padding: 1.5rem; border-radius: var(--radius-lg); color: white;
+    display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow-md);
+}
+
+.resumo-icon {
+    font-size: 2.5rem; background: rgba(255,255,255,0.2); width: 60px; height: 60px; 
+    display: flex; align-items: center; justify-content: center; border-radius: 50%;
+}
+
+.resumo-info p { font-size: 0.85rem; font-weight: 500; opacity: 0.9; margin-bottom: 0.2rem;}
+.resumo-info h3 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.5px;}
+
+.total-divida { background: linear-gradient(135deg, #f43f5e, #e11d48); }
+.proximo-mes { background: linear-gradient(135deg, #10b981, #059669); }
+
+.chart-container {
+    position: relative; height: 300px; width: 100%;
+    display: flex; justify-content: center; align-items: center;
+}
+
+.tags-legend-mobile {
+    display: none; 
+    flex-direction: column; gap: 0.8rem; margin-top: 1.5rem;
+    border-top: 1px dashed var(--border-color); padding-top: 1.5rem;
+}
+
+.legend-item-mobile {
+    display: flex; align-items: center; gap: 12px; background: var(--bg-body); 
+    padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);
+}
+
+.legend-color-box { width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0; }
+.legend-info-mobile { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.legend-info-mobile strong { color: var(--text-main); font-size: 1rem; line-height: 1.2;}
+.legend-info-mobile span { font-size: 0.85rem; color: var(--text-muted); display: flex; justify-content: space-between; }
+.legend-info-mobile span b { color: var(--brand-dark); font-weight: 700; }
+
+/* ========================================================
+   CARROSSEL DE CARTÕES ATIVOS E BADGES
+   ======================================================== */
+.bancos-carrossel-wrapper { padding: 1.5rem; }
+.bancos-carrossel {
+    display: flex; overflow-x: auto; scroll-snap-type: x mandatory;
+    gap: 1.2rem; padding-bottom: 0.5rem;
+}
+
+.banco-resumo-card {
+    background: var(--surface); border: 1px solid var(--border-color);
+    border-radius: var(--radius-md); padding: 1.2rem; min-width: 260px;
+    flex: 0 0 auto; scroll-snap-align: start; cursor: pointer; transition: var(--transition);
+}
+
+.banco-resumo-card:hover { border-color: var(--brand-light); transform: translateY(-4px); box-shadow: 0 10px 20px rgba(123, 0, 255, 0.1); }
+.banco-resumo-card h3 { font-size: 1.1rem; color: var(--brand-dark); font-weight: 600; margin-bottom: 0.8rem; display: flex; justify-content: space-between; }
+.banco-resumo-card .info-linha { display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted); }
+.banco-resumo-card .info-valor { color: var(--text-main); font-weight: 700; font-size: 1.2rem; margin-top: 0.2rem; }
+
+.badge { 
+    padding: 0.35rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; 
+    display: inline-flex; align-items: center; letter-spacing: 0.3px;
+}
+.badge-pago { background-color: var(--success-light); color: var(--success); }
+.badge-atrasada { background-color: var(--danger-light); color: var(--danger); }
+.badge-prestes { background-color: var(--warning-light); color: #d97706; }
+.badge-emdia { background-color: var(--info-light); color: var(--info); }
+
+/* ========================================================
+   FATURAS E BANCOS (CORPO PRINCIPAL)
+   ======================================================== */
+.banco-card { 
+    background: var(--surface); border-radius: var(--radius-lg); 
+    box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); margin-bottom: 2.5rem; overflow: hidden;
+}
+
+.banco-header { 
+    background-color: var(--surface); padding: 1.5rem; 
+    border-bottom: 1px solid var(--border-color); display: flex; 
+    justify-content: space-between; align-items: center; gap: 1rem;
+}
+
+.banco-info-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    flex: 1;
+    user-select: none;
+    transition: var(--transition);
+}
+.banco-info-toggle:hover .banco-info span {
+    color: var(--brand-light);
+}
+
+.setinha-banco {
+    font-size: 1.1rem;
+    color: var(--brand-primary);
+    transition: transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--bg-body);
+    border-radius: 50%;
+}
+
+.banco-info { display: flex; flex-direction: column; gap: 0.2rem;}
+.banco-info span { font-size: 1.25rem; font-weight: 700; color: var(--brand-dark); transition: var(--transition); }
+.banco-info small { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+
+.btn-editar { 
+    background-color: transparent; border: 1px solid var(--border-color); 
+    color: var(--text-muted); padding: 0.5rem 1rem; width: auto; font-size: 0.85rem;
+}
+.btn-editar:hover { background-color: var(--bg-body); color: var(--brand-primary); border-color: var(--brand-primary);}
+
+.banco-body { padding: 1.5rem; background-color: #fafbfc; transition: var(--transition); } 
+.banco-body.hidden { display: none !important; }
+
+.faturas-container { 
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; width: 100%;
+}
+
+.fatura-mes { 
+    background: var(--surface); border: 1px solid var(--border-color); 
+    border-radius: var(--radius-md); padding: 1.5rem; 
+    box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+    height: max-content; width: 100%; transition: var(--transition);
+}
+.fatura-mes:hover { border-color: #cbd5e1; box-shadow: var(--shadow-md); }
+
+.fatura-mes-header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    border-bottom: 1px dashed var(--border-color); padding-bottom: 1rem; 
+    margin-bottom: 1.2rem; font-size: 1.1rem; color: var(--text-main);
+}
+.fatura-mes-header .header-info { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; font-weight: 700;}
+
+.fatura-itens { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;} 
+
+.fatura-item { 
+    display: flex; justify-content: space-between; align-items: center; 
+    font-size: 0.9rem; padding: 0.8rem; border-radius: 8px;
+    background: var(--bg-body); border: 1px solid transparent; transition: var(--transition);
+}
+.fatura-item:hover { background: var(--surface); border-color: var(--border-color); box-shadow: var(--shadow-sm);}
+
+.item-desc { color: var(--text-main); font-weight: 500; display: flex; flex-direction: column; flex: 1; padding-right: 1rem; word-break: break-word;}
+.item-desc small { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.2rem;}
+.item-direita { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+.item-valor { color: var(--brand-dark); font-weight: 700; white-space: nowrap;}
+
+.item-acoes { display: flex; gap: 0.3rem; }
+.btn-icon { 
+    background: var(--surface); border: 1px solid var(--border-color); 
+    font-size: 0.85rem; padding: 0.3rem 0.5rem; border-radius: 6px; color: var(--text-muted);
+}
+.btn-icon:hover { background: var(--bg-body); transform: translateY(-1px); }
+.btn-icon.edit:hover { color: var(--info); border-color: var(--info-light); }
+.btn-icon.delete:hover { color: var(--danger); border-color: var(--danger-light); }
+
+.fatura-totais { 
+    background: var(--bg-body); padding: 1.2rem; border-radius: var(--radius-md); 
+    display: flex; justify-content: space-between; font-size: 0.85rem; 
+    margin-bottom: 1.2rem; border: 1px solid var(--border-color); color: var(--text-muted);
+}
+.fatura-totais span { flex: 1; text-align: center; }
+.fatura-totais strong { display: block; font-size: 1.1rem; margin-top: 0.4rem; color: var(--text-main); font-weight: 700;}
+.txt-aberto strong { color: var(--danger); }
+.txt-pago strong { color: var(--success); }
+
+.fatura-acoes { display: flex; flex-direction: column; gap: 0.8rem;}
+.pagamento-parcial { display: flex; gap: 0.5rem; align-items: stretch; }
+.pagamento-parcial input { width: 100%; border-radius: var(--radius-md); font-size: 0.9rem;}
+
+.btn-abater { background-color: var(--surface); color: var(--text-main); border: 1px solid var(--border-color); white-space: nowrap; font-weight: 600;}
+.btn-abater:hover { background-color: var(--bg-body); }
+.btn-corrigir-abatimento { background-color: var(--surface); color: var(--warning); border: 1px solid var(--border-color); width: 100%; }
+.btn-corrigir-abatimento:hover { background-color: var(--warning-light); border-color: var(--warning-light); }
+.btn-pago-total { background-color: var(--success); color: white; padding: 0.85rem; width: 100%; font-size: 0.95rem; }
+.btn-pago-total:hover { background-color: #059669; }
+.btn-desfazer { background-color: var(--surface); color: var(--text-muted); border: 1px solid var(--border-color); width: 100%; }
+.btn-desfazer:hover { background-color: var(--danger-light); color: var(--danger); border-color: var(--danger-light);}
+
+/* ========================================================
+   FATURAS OCULTAS (TOGGLES ANIMADOS) E MODAIS
+   ======================================================== */
+.toggle-faturas-wrapper { margin-top: 2rem; }
+.btn-toggle-faturas {
+    background-color: transparent; color: var(--text-main); border: 1px solid var(--border-color);
+    padding: 1rem 1.5rem; width: 100%; text-align: left; display: flex; justify-content: space-between;
+    align-items: center; font-size: 0.95rem; font-weight: 600; border-radius: var(--radius-md);
+}
+.btn-toggle-faturas:hover { background-color: var(--surface); box-shadow: var(--shadow-sm); border-color: #cbd5e1;}
+.setinha { transition: transform 0.3s ease; font-size: 0.8rem; color: var(--text-muted); }
+.faturas-secundarias-container { margin-top: 1.5rem; animation: fadeIn 0.4s ease;}
+.faturas-secundarias-container.hidden { display: none; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+    display: flex; justify-content: center; align-items: center; z-index: 1000; padding: 1rem;
+    animation: fadeIn 0.2s ease;
+}
+.modal-content { width: 100%; max-width: 450px; max-height: 90vh; overflow-y: auto; border: none;}
+.modal-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+.btn-salvar { background-color: var(--brand-primary); color: white; flex: 2;}
+.btn-cancelar { background-color: var(--surface); color: var(--text-main); border: 1px solid var(--border-color); flex: 1;}
+
+/* ========================================================
+   RODAPÉ (FOOTER)
+   ======================================================== */
+footer {
+    text-align: center; padding: 2.5rem 1rem 1.5rem; margin-top: auto; 
+    border-top: 1px solid var(--border-color); background-color: var(--surface);
+    color: var(--text-muted); font-size: 0.9rem;
+}
+footer strong { color: var(--brand-primary); font-weight: 700; }
+
+/* ========================================================
+   RESPONSIVIDADE CELULAR
+   ======================================================== */
+@media (max-width: 768px) {
+    header { padding: 1rem; }
+    .header-content { flex-direction: column; text-align: center; gap: 10px;}
+    #logo-site { height: 45px; }
+
+    .grid-container { grid-template-columns: 1fr; gap: 1.5rem; }
+    .resumo-cards { flex-direction: column; }
+    .banco-body { padding: 1rem; }
+    
+    .banco-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+    .banco-info-toggle { width: 100%; }
+    .banco-header .btn-editar { width: 100%; text-align: center; }
+    
+    .fatura-totais { flex-direction: column; gap: 0.5rem; text-align: left; }
+    .fatura-totais span { text-align: left; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+    .fatura-totais strong { margin-top: 0; }
+    .fatura-totais span:last-child { border-bottom: none; padding-bottom: 0; }
+    
+    .pagamento-parcial { flex-direction: column; }
+    .pagamento-parcial input, .pagamento-parcial .btn-abater { width: 100%; }
+
+    .tags-legend-mobile { display: flex; }
+    .chart-container { height: 220px; }
+}

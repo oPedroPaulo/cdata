@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Data | Painel Financeiro</title>
+    
+    <!-- Fonte Moderna do Google (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Ícone da aba do navegador (Favicon) -->
+    <link rel="icon" type="image/x-icon" href="img/logo sem fundo ico.ico">
+    
+    <!-- Biblioteca de Gráficos (Chart.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="img/Logo Png Control Data.png" alt="Logo Control Data" id="logo-site">
+            <div class="header-titles">
+                <h1>Control Data</h1>
+                <p>Gestão Financeira Inteligente (Online)</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="grid-container">
+            <!-- Coluna de Cadastros -->
+            <div class="form-section">
+                <section class="card">
+                    <h2><span class="icon">🏦</span> Cadastrar Cartão</h2>
+                    <form id="form-banco">
+                        <input type="text" id="nome-banco" placeholder="Nome do Banco (ex: Nubank, Inter)" required>
+                        <div class="dias-inputs">
+                            <div>
+                                <label>Dia de Fechamento</label>
+                                <input type="number" id="fechamento-banco" placeholder="Ex: 25" min="1" max="31" required>
+                            </div>
+                            <div>
+                                <label>Dia de Vencimento</label>
+                                <input type="number" id="vencimento-banco" placeholder="Ex: 05" min="1" max="31" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-primary">Adicionar Cartão</button>
+                    </form>
+                </section>
+
+                <section class="card">
+                    <h2><span class="icon">🛒</span> Registrar Gasto</h2>
+                    <form id="form-compra">
+                        <input type="text" id="desc-compra" placeholder="Descrição da compra" required>
+                        <input type="number" id="valor-compra" placeholder="Valor Total (R$)" step="0.01" required>
+                        <input type="date" id="data-compra" required>
+                        
+                        <label style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500; margin-bottom: -10px;">Categoria (Tag):</label>
+                        <div class="tag-group">
+                            <select id="select-tag">
+                                <option value="">Sem Tag</option>
+                            </select>
+                            <button type="button" class="btn-secondary" onclick="abrirModalNovaTag()">+ Nova Tag</button>
+                        </div>
+
+                        <select id="select-banco" required>
+                            <option value="">Selecione o Cartão</option>
+                        </select>
+                        
+                        <select id="tipo-pagamento" required>
+                            <option value="avista">À vista</option>
+                            <option value="parcelado">Parcelado</option>
+                        </select>
+                        
+                        <input type="number" id="parcelas-compra" placeholder="Qtd. de Parcelas" min="2" class="hidden">
+                        
+                        <button type="submit" class="btn-primary">Registrar Compra</button>
+                    </form>
+                </section>
+
+                <section class="card">
+                    <h2><span class="icon">☁️</span> Dados e Nuvem</h2>
+                    <div class="backup-actions">
+                        <button id="btn-exportar" type="button" class="btn-exportar">📥 Baixar Backup (.json)</button>
+                        
+                        <div class="import-area">
+                            <label for="input-importar">Migrar / Carregar JSON:</label>
+                            <div class="import-input-group">
+                                <input type="file" id="input-importar" accept=".json">
+                                <button id="btn-importar" type="button" class="btn-importar">Carregar</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Coluna de Visualização e Faturas -->
+            <div class="dashboard-section">
+                <!-- Mapeamento Geral Resumido -->
+                <section class="card resumo-geral">
+                    <h2>Panorama Global</h2>
+                    <div class="resumo-cards">
+                        <div class="resumo-box total-divida">
+                            <div class="resumo-icon">💳</div>
+                            <div class="resumo-info">
+                                <p>Dívida Ativa / Futura</p>
+                                <h3 id="valor-divida-total">R$ 0,00</h3>
+                            </div>
+                        </div>
+                        <div class="resumo-box proximo-mes">
+                            <div class="resumo-icon">📅</div>
+                            <div class="resumo-info">
+                                <p id="label-proximo-mes">Próximo Mês</p>
+                                <h3 id="valor-proximo-mes">R$ 0,00</h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Gráfico de Pizza (Tags) -->
+                <section class="card grafico-section">
+                    <h2><span class="icon">📊</span> Análise de Gastos (Categorias)</h2>
+                    <div class="chart-container">
+                        <canvas id="tagsChart"></canvas>
+                    </div>
+                    <!-- Lista de detalhes das tags (Aparece apenas no Celular) -->
+                    <div id="tags-legend-mobile" class="tags-legend-mobile"></div>
+                </section>
+
+                <!-- Carrossel de Resumo dos Bancos -->
+                <section class="bancos-carrossel-wrapper">
+                    <h2 class="section-title">Seus Cartões Ativos</h2>
+                    <div class="bancos-carrossel" id="bancos-carrossel-container">
+                        <!-- Gerado via JS -->
+                    </div>
+                </section>
+
+                <!-- Detalhamento por Banco -->
+                <div id="lista-bancos-faturas">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Nova Tag -->
+        <div id="modal-nova-tag" class="modal hidden">
+            <div class="modal-content card">
+                <h2>🏷️ Criar Nova Tag</h2>
+                <form id="form-nova-tag">
+                    <label>Nome da Categoria:</label>
+                    <input type="text" id="nome-tag" placeholder="Ex: Mercado, Pessoal, Empresa..." required>
+                    
+                    <label>Cor da Tag:</label>
+                    <div class="color-picker-group">
+                        <input type="color" id="cor-tag" value="#7b00ff" required>
+                        <span class="dica-cor">Escolha uma cor para identificar no gráfico</span>
+                    </div>
+                    
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-salvar">Salvar Tag</button>
+                        <button type="button" class="btn-cancelar" onclick="fecharModal('modal-nova-tag')">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de Edição de Banco -->
+        <div id="modal-editar-banco" class="modal hidden">
+            <div class="modal-content card">
+                <h2>Editar Cartão</h2>
+                <form id="form-editar-banco">
+                    <input type="hidden" id="edit-id-banco">
+                    <label>Nome do Banco:</label>
+                    <input type="text" id="edit-nome-banco" required>
+                    <div class="dias-inputs">
+                        <div>
+                            <label>Dia de Fechamento:</label>
+                            <input type="number" id="edit-fechamento-banco" min="1" max="31" required>
+                        </div>
+                        <div>
+                            <label>Dia de Vencimento:</label>
+                            <input type="number" id="edit-vencimento-banco" min="1" max="31" required>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-salvar">Salvar</button>
+                        <button type="button" class="btn-cancelar" onclick="fecharModal('modal-editar-banco')">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de Edição de Compra -->
+        <div id="modal-editar-compra" class="modal hidden">
+            <div class="modal-content card">
+                <h2>Editar Compra</h2>
+                <form id="form-editar-compra">
+                    <input type="hidden" id="edit-id-compra">
+                    
+                    <label>Descrição:</label>
+                    <input type="text" id="edit-desc-compra" required>
+                    
+                    <label>Valor Total (R$):</label>
+                    <input type="number" id="edit-valor-compra" step="0.01" required>
+                    
+                    <label>Data da Compra:</label>
+                    <input type="date" id="edit-data-compra" required>
+
+                    <label>Categoria (Tag):</label>
+                    <select id="edit-select-tag">
+                        <option value="">Sem Tag</option>
+                    </select>
+                    
+                    <label>Banco:</label>
+                    <select id="edit-select-banco" required></select>
+                    
+                    <label>Pagamento:</label>
+                    <select id="edit-tipo-pagamento" required>
+                        <option value="avista">À vista</option>
+                        <option value="parcelado">Parcelado</option>
+                    </select>
+                    
+                    <input type="number" id="edit-parcelas-compra" placeholder="Qtd. de Parcelas" min="2" class="hidden">
+                    
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-salvar">Salvar</button>
+                        <button type="button" class="btn-cancelar" onclick="fecharModal('modal-editar-compra')">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal de Edição de Abatimento -->
+        <div id="modal-editar-abatimento" class="modal hidden">
+            <div class="modal-content card">
+                <h2>✏️ Corrigir Abatimento</h2>
+                <form id="form-editar-abatimento">
+                    <input type="hidden" id="edit-banco-id-abat">
+                    <input type="hidden" id="edit-key-mes-abat">
+                    
+                    <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                        Digite o valor exato que já foi pago ou adiantado nesta fatura. Para remover o abatimento e zerar, digite 0.
+                    </p>
+                    
+                    <label>Valor Total Pago (R$):</label>
+                    <input type="number" id="edit-valor-abat" step="0.01" min="0" required>
+                    
+                    <div class="modal-actions">
+                        <button type="submit" class="btn-salvar">Salvar Novo Valor</button>
+                        <button type="button" class="btn-cancelar" onclick="fecharModal('modal-editar-abatimento')">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Rodapé da Control Data -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 <strong>Control Data</strong>. Todos os direitos reservados. Sistema de Gestão Financeira.</p>
+        </div>
+    </footer>
+
+    <!-- Script principal carregado como módulo para suportar Firebase -->
+    <script type="module" src="script.js"></script>
+</body>
+</html>
